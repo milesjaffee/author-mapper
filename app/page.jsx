@@ -1,9 +1,13 @@
 'use client';
 
 import { useState } from 'react';
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import Papa from 'papaparse';
+import dynamic from 'next/dynamic';
+
+const DynamicMap = dynamic(() => import('../components/Map'), {
+  ssr: false, // Disable server-side rendering for this component
+});
 
 export default function Home() {
   const [locations, setLocations] = useState([]);
@@ -39,14 +43,7 @@ export default function Home() {
       <input type="file" accept=".csv" onChange={handleUpload} className="mb-4" />
       {loading && <p>Processing...</p>}
       {!loading && locations.length > 0 && (
-        <MapContainer center={[20, 0]} zoom={2} style={{ height: '600px', width: '100%' }}>
-          <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-          {locations.map((loc, idx) => (
-            <Marker key={idx} position={[loc.lat, loc.lon]}>
-              <Popup>{loc.authors.join(', ')}</Popup>
-            </Marker>
-          ))}
-        </MapContainer>
+        <DynamicMap locations={locations}/>
       )}
     </div>
   );

@@ -44,7 +44,7 @@ export default async function handler(req, res) {
 
       // Now get birthplace(s)
       const sparql = `
-        SELECT DISTINCT ?birthplace ?birthplaceLabel ?lat ?lon WHERE {
+        SELECT DISTINCT ?birthplace ?birthplaceLabel ?coords WHERE {
           wd:${entityId} p:P19 ?birthplaceStatement.
           ?birthplaceStatement ps:P19 ?birthplace.
           OPTIONAL {
@@ -72,18 +72,19 @@ export default async function handler(req, res) {
       
       const sparqlData = await sparqlResp.json();
       const results = sparqlData.results.bindings;
+      console.log(results);
 
       let found = false;
       for (const result of results) {
         if (result.coords) {
-            const coords = result.coords.value.match(/POINT\(([^ ]+) ([^ ]+)\)/);
+            const coords = result.coords.value.match(/Point\(([^ ]+) ([^ ]+)\)/);
             if (coords) {
                 const lat = parseFloat(coords[2]);
                 const lon = parseFloat(coords[1]);
                 const key = `${lat.toFixed(4)},${lon.toFixed(4)}`;
     
                 if (!coordToAuthors[key]) {
-                coordToAuthors[key] = { lat, lon, authors: [] };
+                    coordToAuthors[key] = { lat, lon, authors: [] };
                 }
     
                 coordToAuthors[key].authors.push(author);
