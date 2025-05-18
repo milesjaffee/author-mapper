@@ -1,7 +1,9 @@
-import { useState } from "react";
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
-import "leaflet/dist/leaflet.css";
-import Papa from "papaparse";
+'use client';
+
+import { useState } from 'react';
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import 'leaflet/dist/leaflet.css';
+import Papa from 'papaparse';
 
 export default function Home() {
   const [locations, setLocations] = useState([]);
@@ -18,9 +20,9 @@ export default function Home() {
       complete: async (results) => {
         const csvData = results.data;
 
-        const response = await fetch("/api/process-csv", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
+        const response = await fetch('/api/process-csv', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ books: csvData }),
         });
 
@@ -37,13 +39,11 @@ export default function Home() {
       <input type="file" accept=".csv" onChange={handleUpload} className="mb-4" />
       {loading && <p>Processing...</p>}
       {!loading && locations.length > 0 && (
-        <MapContainer center={[20, 0]} zoom={2} style={{ height: "600px", width: "100%" }}>
+        <MapContainer center={[20, 0]} zoom={2} style={{ height: '600px', width: '100%' }}>
           <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
           {locations.map((loc, idx) => (
             <Marker key={idx} position={[loc.lat, loc.lon]}>
-              <Popup>
-                {loc.authors.join(", ")}
-              </Popup>
+              <Popup>{loc.authors.join(', ')}</Popup>
             </Marker>
           ))}
         </MapContainer>

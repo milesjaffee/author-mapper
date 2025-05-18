@@ -1,6 +1,11 @@
 import fetch from 'node-fetch';
 
 export default async function handler(req, res) {
+
+    function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+    }
+    
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
@@ -44,8 +49,6 @@ export default async function handler(req, res) {
           ?birthplaceStatement ps:P19 ?birthplace.
           OPTIONAL {
             ?birthplace wdt:P625 ?coords.
-            BIND(geo:latitude(?coords) AS ?lat)
-            BIND(geo:longitude(?coords) AS ?lon)
           }
           SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }
         }
@@ -56,24 +59,37 @@ export default async function handler(req, res) {
         sparql
       )}`;
 
-      const sparqlResp = await fetch(queryUrl, { headers: { 'User-Agent': 'milesjaffee/author-mapper mej327@lehigh.edu' }});
+      sleep(100);
+      const sparqlResp = await fetch(queryUrl, {
+        headers: { 'User-Agent': 'milesjaffee/author-mapper mej327@lehigh.edu' }
+      });
+      
+      if (!sparqlResp.ok) {
+        const errorText = await sparqlResp.text();
+        console.error(`[SPARQL ERROR] ${author} → ${sparqlResp.status}: ${errorText}`);
+        continue;
+      }
+      
       const sparqlData = await sparqlResp.json();
       const results = sparqlData.results.bindings;
 
       let found = false;
       for (const result of results) {
-        if (result.lat && result.lon) {
-          const lat = parseFloat(result.lat.value);
-          const lon = parseFloat(result.lon.value);
-          const key = `${lat.toFixed(4)},${lon.toFixed(4)}`;
-
-          if (!coordToAuthors[key]) {
-            coordToAuthors[key] = { lat, lon, authors: [] };
-          }
-
-          coordToAuthors[key].authors.push(author);
-          found = true;
-          break;
+        if (result.coords) {
+            const coords = result.coords.value.match(/POINT\(([^ ]+) ([^ ]+)\)/);
+            if (coords) {
+                const lat = parseFloat(coords[2]);
+                const lon = parseFloat(coords[1]);
+                const key = `${lat.toFixed(4)},${lon.toFixed(4)}`;
+    
+                if (!coordToAuthors[key]) {
+                coordToAuthors[key] = { lat, lon, authors: [] };
+                }
+    
+                coordToAuthors[key].authors.push(author);
+                found = true;
+                break;
+            }
         }
       }
 
