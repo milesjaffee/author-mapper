@@ -54,7 +54,7 @@ export default function RootLayout({
           350px
         )`,
       backgroundSize: "100% 200px",
-      animation: "scrollBackground 20s linear infinite",
+      animation: "scrollBackground 30s linear infinite",
       }}
       >
         <style>
@@ -70,7 +70,7 @@ export default function RootLayout({
         `}
       </style>
       <main className="relative flex flex-col items-center justify-items-center h-screen p-8 mb-20 sm:px-20 lg:px-60 gap-16 font-[family-name:var(--font-geist-sans)]">
-        <div className="w-full px-10 pb-10 bg-[rgba(255,255,255,0.4)] backdrop-blur-lg rounded-2xl shadow-xl">
+        <div className="w-full px-10 pb-5 bg-[rgba(255,255,255,0.4)] backdrop-blur-lg rounded-2xl shadow-xl">
           {children}
           </div>
         </main>

@@ -71,8 +71,8 @@ export default function Home() {
         <DynamicMap locations={locations}/>
       )}
       <div id="footer" className="mt-4">
-        <p className="text-sm">
-
+        <p className="text-sm mt-5">
+          Created by Miles Jaffee using Vercel. See the source on <a href="https://github.com/milesjaffee/author-mapper" className="underline">GitHub</a>. 
         </p>
       </div>
     </div>
