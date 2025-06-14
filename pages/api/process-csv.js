@@ -88,7 +88,7 @@ export default async function handler(req, res) {
                     coordToAuthors[key] = { lat, lon, authors: [] };
                 }
     
-                coordToAuthors[key].authors.push(author);
+                coordToAuthors[key].authors.push([author, shelf]);
                 found = true;
                 break;
             }
