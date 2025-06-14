@@ -87,9 +87,8 @@ export default function Home() {
       )}
       <div id="footer" className="mt-4">
         <p className="text-sm mt-5">
-          Created by Miles Jaffee using Vercel. See the source on <a href="https://github.com/milesjaffee/author-mapper" className="underline">GitHub</a>. 
+          Created by Miles Jaffee using Vercel. See the source on <a href="https://github.com/milesjaffee/author-mapper" className="underline">GitHub</a>. <a href="/about" className="underline italic">About</a>
         </p>
-        
       </div>
     </div>
   );
