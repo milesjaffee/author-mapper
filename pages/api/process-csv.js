@@ -15,10 +15,10 @@ export default async function handler(req, res) {
   // Filter out to-read shelf and dedupe authors
   const authorsSet = new Set();
   for (const book of books) {
-    if (book['Exclusive Shelf'] !== 'to-read' && book['Author']) {
+    if (book['Author']) {
       // Clean up author name (remove extra spaces)
       const cleanAuthor = book['Author'].replace(/\s+/g, ' ').trim();
-      authorsSet.add(cleanAuthor);
+      authorsSet.add([cleanAuthor, book['Exclusive Shelf']]);
     }
   }
 
@@ -26,7 +26,8 @@ export default async function handler(req, res) {
   const locations = [];
   const coordToAuthors = {};
 
-  for (const author of authors) {
+  for (const authorObject of authors) {
+    const [author, shelf] = authorObject;
     try {
       const searchUrl = `https://www.wikidata.org/w/api.php?action=wbsearchentities&search=${encodeURIComponent(
         author

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, CheckBox } from 'react';
 import 'leaflet/dist/leaflet.css';
 import Papa from 'papaparse';
 import dynamic from 'next/dynamic';
@@ -14,6 +14,7 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
   const [numBooks, setNumBooks] = useState(0);
   const [loadedBooks, setLoadedBooks] = useState(0);
+  const [toReads, setToReads] = useState(false);
 
   function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
@@ -21,13 +22,15 @@ export default function Home() {
 
   const interval = setInterval(() => {
     if (loading) {
-      sleep(333);
+      
       setLoadedBooks((prev) => {
+        sleep(40);
         if (prev + 1 >= numBooks) {
-          clearInterval(interval);
-          return numBooks;
-        }
-        return prev + 1;
+            clearInterval(interval);
+            return numBooks;
+          }
+          return prev + 1;
+        
       });
     }
   }, 100);
@@ -65,7 +68,11 @@ export default function Home() {
       <p className="text-lg mb-4">Upload a Goodreads CSV and see a map of all your favorite authors' birthplaces.</p>
       <p className="text-lg mb-4">Note: This may take a while to process, depending on the number of authors.</p>
       <p className="text-lg mb-4">Get your CSV file here: <a className="italic underline" href="https://www.goodreads.com/review/import">My Books - Import/Export</a></p>
-      <input id="csvInput" type="file" accept=".csv" onChange={handleUpload} className="mb-4 underline" />
+      <input id="csvInput" type="file" accept=".csv" onChange={handleUpload} className="mb-4 border-1 underline" />
+      <label>
+          <input type="checkbox" id="toReads" checked={toReads} label="Include authors of the books on your 'to-read' list?" onChange={() => setToReads(!toReads)} className="mr-2" />
+          Include authors of the books on your 'to-read' list?
+      </label>
       {loading && <p>Processing... [{loadedBooks}/{numBooks}]</p>}
       {!loading && locations.length > 0 && (
         <DynamicMap locations={locations}/>
