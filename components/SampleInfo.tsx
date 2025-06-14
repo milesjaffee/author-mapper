@@ -6,14 +6,6 @@ export interface Location {
   
   const sampleLocations: Location[] = [
     {
-      lat: -74.0061,
-      lon: 40.7128,
-      authors: [
-        ['Mark Z. Danielewski', 'read'],
-        ['Jonathan Lethem', 'to-read'], // Shared location with a read author
-      ],
-    },
-    {
       lat: 48.8566,
       lon: 2.3522,
       authors: [['Victor Hugo', 'read']],
@@ -21,7 +13,9 @@ export interface Location {
     {
       lat: 40.7128,
       lon: -74.006,
-      authors: [['James Baldwin', 'read']],
+      authors: [['James Baldwin', 'read'],
+      ['Mark Z. Danielewski', 'read'],
+        ['Jonathan Lethem', 'to-read']], // Shared location with a read author
     },
     {
       lat: 55.7558,

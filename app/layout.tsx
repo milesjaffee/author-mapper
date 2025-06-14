@@ -69,11 +69,31 @@ export default function RootLayout({
           }
         `}
       </style>
-      <main className="relative flex flex-col items-center justify-items-center h-screen p-8 mb-20 sm:px-20 lg:px-60 gap-16 font-[family-name:var(--font-geist-sans)]">
+      <main className="relative flex flex-col items-center justify-items-center h-screen pb-20 sm:px-20 lg:px-60 gap-10 font-[family-name:var(--font-geist-sans)]">
         <div className="w-full px-10 pb-5 bg-[rgba(255,255,255,0.4)] backdrop-blur-lg rounded-2xl shadow-xl">
           {children}
+          
           </div>
+          
         </main>
+        <script src='https://storage.ko-fi.com/cdn/scripts/overlay-widget.js'></script>
+            <script
+              dangerouslySetInnerHTML={{
+              __html: `
+              const updateKofiWidget = (locale) => {
+              kofiWidgetOverlay.draw('milesjaffee', {
+                type: 'floating-chat',
+                'floating-chat.donateButton.text': 'Support Me',
+                'floating-chat.donateButton.background-color': '#fffc',
+                'floating-chat.donateButton.text-color': '#000'
+              });
+              };
+
+              // Initial setup
+              updateKofiWidget('en');
+              `,
+              }}
+            ></script>
       </body>
     </html>
   )

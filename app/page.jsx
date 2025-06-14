@@ -69,8 +69,14 @@ export default function Home() {
       <p className="text-lg mb-4">Upload a Goodreads CSV and see a map of all your favorite authors' birthplaces.</p>
       <p className="text-lg mb-4">Note: This may take a while to process, depending on the number of authors.</p>
       <p className="text-lg mb-4">Get your CSV file here: <a className="italic underline" href="https://www.goodreads.com/review/import">My Books - Import/Export</a></p>
-      <input id="csvInput" type="file" accept=".csv" onChange={handleUpload} className="mb-4 border-1 underline" />
-
+      <div className="mb-4 border-1">
+        <input id="csvInput" type="file" accept=".csv" onChange={handleUpload} className="underline" />
+        <input type="button" value="(Use Sample Data)" className="italic underline" onClick={() => {
+          setLocations(sampleLocations);
+          setNumBooks(sampleLocations.length);
+          setLoadedBooks(sampleLocations.length);
+        }} />
+      </div>
       <label>
           <input type="checkbox" id="toReads" checked={toReads} label="Include authors of the books on your 'to-read' list?" onChange={() => setToReads(!toReads)} className="mr-2" />
           Include authors of the books on your 'to-read' list?
@@ -83,6 +89,7 @@ export default function Home() {
         <p className="text-sm mt-5">
           Created by Miles Jaffee using Vercel. See the source on <a href="https://github.com/milesjaffee/author-mapper" className="underline">GitHub</a>. 
         </p>
+        
       </div>
     </div>
   );

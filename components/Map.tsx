@@ -49,8 +49,8 @@ export default function DynamicMap({ locations, seeToread = true }: MapProps) {
           <Marker key={idx} position={[loc.lat, loc.lon]}>
             <Popup>
               {visibleAuthors.map(([name, shelf], i) => (
-                <div key={i}>
-                  {name} <small>({shelf})</small>
+                <div key={i} className="text-base">
+                {name} <small>({shelf})</small>
                 </div>
               ))}
             </Popup>
