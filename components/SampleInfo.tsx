@@ -15,7 +15,7 @@ export interface Location {
       lon: -74.006,
       authors: [['James Baldwin', 'read'],
       ['Mark Z. Danielewski', 'read'],
-        ['Jonathan Lethem', 'to-read']], // Shared location with a read author
+        ['Jonathan Lethem', 'to-read']], 
     },
     {
       lat: 55.7558,
