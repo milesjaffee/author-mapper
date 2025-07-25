@@ -60,7 +60,7 @@ export default async function handler(req, res) {
         sparql
       )}`;
 
-      sleep(100);
+      //sleep(20);
       const sparqlResp = await fetch(queryUrl, {
         headers: { 'User-Agent': 'milesjaffee/author-mapper mej327@lehigh.edu' }
       });
@@ -73,7 +73,7 @@ export default async function handler(req, res) {
       
       const sparqlData = await sparqlResp.json();
       const results = sparqlData.results.bindings;
-      console.log(results);
+      console.log(results[0]);
 
       let found = false;
       for (const result of results) {
