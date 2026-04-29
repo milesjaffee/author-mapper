@@ -17,7 +17,7 @@ export default function Home() {
   const [loadedBooks, setLoadedBooks] = useState(0);
   const [toReads, setToReads] = useState(false);
 
-  function sleep(ms) {
+  function sleep(ms: number) {
     return new Promise(resolve => setTimeout(resolve, ms));
     }
 
@@ -34,7 +34,7 @@ export default function Home() {
     }
   }, [loading, numBooks]);
 
-  async function handleUpload(e) {
+  async function handleUpload(e: any) {
     const file = e.target.files?.[0];
     if (!file) return;
 

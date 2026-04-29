@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
-    "build": "next build",
-    "start": "next start",
+    "dev": "NODE_OPTIONS='--no-webstorage' next dev --turbopack",
+    "build": "NODE_OPTIONS='--no-webstorage' next build",
+    "start": "NODE_OPTIONS='--no-webstorage' next start",
     "lint": "next lint"
   },
   "dependencies": {
@@ -22,8 +22,11 @@
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
+    "@types/papaparse": "^5.5.2",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "eslint": "9.39.4",
+    "eslint-config-next": "16.2.4",
     "tailwindcss": "^4",
     "typescript": "^5"
   }
