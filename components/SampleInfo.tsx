@@ -1,10 +1,10 @@
-export interface Location {
+export interface AuthorLocation {
     lat: number;
     lon: number;
     authors: [string, string][];
   }
   
-  const sampleLocations: Location[] = [
+  const sampleLocations: AuthorLocation[] = [
     {
       lat: 48.8566,
       lon: 2.3522,

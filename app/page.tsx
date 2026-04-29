@@ -4,14 +4,16 @@ import { useState, useEffect } from 'react';
 import 'leaflet/dist/leaflet.css';
 import Papa from 'papaparse';
 import dynamic from 'next/dynamic';
-import sampleLocations from '@/components/SampleInfo';
+import sampleLocations, { AuthorLocation } from '@/components/SampleInfo';
 
 const DynamicMap = dynamic(() => import('../components/Map'), {
   ssr: false, // Disable server-side rendering for this component
 });
 
+const sampleLocs = sampleLocations;
+
 export default function Home() {
-  const [locations, setLocations] = useState([]);
+  const [locations, setLocations] = useState<AuthorLocation[]>([]);
   const [loading, setLoading] = useState(false);
   const [numBooks, setNumBooks] = useState(0);
   const [loadedBooks, setLoadedBooks] = useState(0);
@@ -78,7 +80,7 @@ export default function Home() {
         }} />
       </div>
       <label>
-          <input type="checkbox" id="toReads" checked={toReads} label="Include authors of the books on your 'to-read' list?" onChange={() => setToReads(!toReads)} className="mr-2" />
+          <input type="checkbox" id="toReads" checked={toReads} onChange={() => setToReads(!toReads)} className="mr-2" />
           Include authors of the books on your 'to-read' list?
       </label>
       {loading && <p>Processing... [{loadedBooks}/{numBooks}]</p>}
